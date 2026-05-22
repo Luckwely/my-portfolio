@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@import 'primeicons/primeicons.css';
+@layer tailwind-base, primevue, tailwind-utilities;
+
+@theme {
+  --animate-ripple: ripple 3s ease-in-out infinite;
+  --animate-photo: photoPulse 3s ease-in-out infinite;
+
+  @keyframes ripple {
+    0%, 100% { 
+      opacity: 0.25;
+      scale: 1;
+    }
+    50% { 
+      opacity: 0.08;
+      scale: 0.97;
+    }
+  }
+
+  @keyframes photoPulse {
+    0%, 100% { 
+      scale: 1;
+      box-shadow: 0 0 0 4px #ff004f55;
+    }
+    50% { 
+      scale: 0.97;
+      box-shadow: 0 0 0 8px #ff004f22;
+    }
+  }
+}
+
+.animate-ripple {
+  animation: ripple 3s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.2s);
+  animation-fill-mode: backwards; /* hides ring until delay is done */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.animate-photo {
+  animation: photoPulse 3s ease-in-out infinite;
+}
+
+.p-toast {
+  padding: 1rem !important;
+}
+
+.p-toast-message {
+  margin-bottom: 1rem !important;
+}
+
+.p-toast-message-content {
+  padding: 1rem 1.25rem !important;
+}
+
