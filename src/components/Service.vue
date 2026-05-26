@@ -82,7 +82,7 @@ onMounted(async () => {
         />
       </div>
 
-      <h3 class="mb-2 text-base font-medium text-gray-900">{{ data.title }}</h3>
+      <h3 class="mb-2 text-base font-medium text-gray-900 dark:text-gray-100">{{ data.title }}</h3>
       <p class="mb-5 text-sm leading-relaxed text-gray-500">{{ data.content }}</p>
 
       <div class="flex items-center gap-1.5 text-[13px] text-gray-400 transition-colors duration-350 group-hover:text-[#ff004f]">

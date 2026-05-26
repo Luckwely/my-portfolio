@@ -81,7 +81,7 @@ const sendEmail = () => {
 
     <form ref="contactForm" @submit.prevent="sendEmail">
         <h1 class="text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-2">Make an Appointment</h1>
-        <p class="mb-5 text-gray-500 xl:text-lg">Feel free to contact with us, we don't spam your email</p>
+        <p class="mb-5 text-gray-500 dark:text-gray-400 xl:text-lg">Feel free to contact with us, we don't spam your email</p>
         <input type="hidden" name="time" value="">
         
         <div>

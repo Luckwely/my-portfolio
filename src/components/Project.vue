@@ -87,11 +87,11 @@ onMounted(async () => {
 
     <div class="flex flex-col flex-1 p-6">
       
-      <h3 class="text-lg font-bold text-slate-800 mb-2 tracking-tight">
+      <h3 class="text-lg font-bold text-slate-800 dark:text-gray-100 mb-2 tracking-tight">
         {{ data.title }}
       </h3>
       
-      <p class="text-sm text-slate-600 leading-relaxed flex-1">
+      <p class="text-sm text-slate-600 dark:text-gray-400 leading-relaxed flex-1">
         {{ data.content }}
       </p>
 
