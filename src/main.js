@@ -10,17 +10,13 @@ app.use(PrimeVue, {
     theme: {
         preset: Aura,
         options: {
-
             cssLayer: {
-
                 name: 'primevue',
-
                 order: 'tailwind-base, primevue, tailwind-utilities'
-
             }
-
         }
     }
-}).use(ToastService)
-.mount('#app')
+})
 
+app.use(ToastService)
+app.mount('#app')

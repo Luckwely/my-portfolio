@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import webGLFluidEnhanced from 'webgl-fluid-enhanced'; 
 import Nav from './components/Nav.vue';
 import Btn from './components/Btn.vue';
 import Ripple from './components/Ripple.vue';
@@ -23,8 +24,29 @@ const sections = ref([]);
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;
 }
+const fluidCanvas = ref(null);
 
 onMounted(() => {
+  if (fluidCanvas.value) {
+    webGLFluidEnhanced.simulation(fluidCanvas.value, {
+  SIM_RESOLUTION: 128,
+  DYE_RESOLUTION: 1024,
+  DENSITY_DISSIPATION: 0.998,   // very close to 1 = smoke stays very long
+  VELOCITY_DISSIPATION: 0.99,
+  PRESSURE: 0.1,
+  SPLAT_RADIUS: 0.9,            // ← was 0.25, now 0.5 = much bigger plume
+  SPLAT_FORCE: 20000,           // ← was 8000, stronger push = spreads further
+  SPLAT_COUNT: 0,
+  SHADING: true,
+  COLORFUL: false,
+  BLOOM: false,
+  COLOR_PALETTE: ['#ff004f'],
+  BACK_COLOR: { r: 0, g: 0, b: 0 },
+  TRANSPARENT: true,
+  HOVER: false,
+  PAUSE: false,
+});
+  }
   sections.value = [
     { el: homeSection.value, id: '0' },
     { el: aboutSection.value, id: '1' },
@@ -60,11 +82,12 @@ function scrollToSection(id) {
     section.el.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
 </script>
 
 <template>
   <main class="w-full h-screen">
-
+  <canvas ref="fluidCanvas" id="fluid-canvas" />
     <Nav>
       <!-- Logo -->
       <p class="font-bold text-2xl">
@@ -219,4 +242,14 @@ function scrollToSection(id) {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#fluid-canvas {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+}
+</style>
