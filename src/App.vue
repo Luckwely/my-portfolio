@@ -11,6 +11,7 @@ import Project from './components/Project.vue';
 import Input from './components/Input.vue';
 import Toast from 'primevue/toast';
 import Social from './components/Social.vue';
+import FluidCanvas from './components/FluidCanvas.vue';
 
 const isMenuOpen = ref(false);
 const value = ref('0');
@@ -86,27 +87,30 @@ function scrollToSection(id) {
 </script>
 
 <template>
+<<<<<<< HEAD
   <main class="w-full h-screen">
   <canvas ref="fluidCanvas" id="fluid-canvas" />
     <Nav>
+=======
+  <main class="relative isolate w-full min-h-screen overflow-x-hidden">
+    <FluidCanvas />
+
+    <Nav class="absolute top-2 z-10">
+>>>>>>> eb46e54 (1st commit)
       <!-- Logo -->
       <p class="font-bold text-2xl">
         Luc<span class="text-[#ff004f] font-extrabold">&lt;/&gt;</span>
       </p>
 
       <!-- Hamburger (mobile only) -->
-      <button
-        type="button"
-        class="md:hidden w-10 h-10 flex items-center justify-center focus:outline-none"
-        @click="toggleMenu"
-      >
-        <i :class="isMenuOpen ? 'pi pi-times' : 'pi pi-bars'" class="text-[#ff004f] text-2xl transition-all duration-300"></i>
+      <button type="button" class="md:hidden w-10 h-10 flex items-center justify-center focus:outline-none"
+        @click="toggleMenu">
+        <i :class="isMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
+          class="text-[#ff004f] text-2xl transition-all duration-300"></i>
       </button>
 
       <!-- Nav links -->
-      <div
-        :class="isMenuOpen ? 'flex' : 'hidden md:flex'"
-        class="absolute md:static top-[72px] left-4 right-4 md:top-auto md:left-auto md:right-auto
+      <div :class="isMenuOpen ? 'flex' : 'hidden md:flex'" class="absolute md:static top-[72px] left-4 right-4 md:top-auto md:left-auto md:right-auto
                flex-col md:flex-row
                bg-black/90 md:bg-transparent
                backdrop-blur-xl md:backdrop-blur-none
@@ -114,38 +118,33 @@ function scrollToSection(id) {
                rounded-2xl md:rounded-none
                px-6 py-5 md:p-0
                gap-5 md:gap-6
-               z-50 tracking-widest"
-      >
-        <li
-          v-for="(label, idx) in ['Home', 'About', 'Services', 'Projects', 'Contact']"
-          :key="idx"
+               z-50 tracking-widest">
+        <li v-for="(label, idx) in ['Home', 'About', 'Services', 'Projects', 'Contact']" :key="idx"
           @click="scrollToSection(String(idx))"
           :class="value === String(idx) ? 'text-[#ff004f] font-extrabold' : 'text-white dark:text-gray-100 md:text-black'"
-          class="cursor-pointer list-none text-base transition-colors duration-300 hover:text-[#ff004f]"
-        >
+          class="cursor-pointer list-none text-base transition-colors duration-300 hover:text-[#ff004f]">
           {{ label }}
         </li>
       </div>
     </Nav>
 
     <!-- Hero -->
-    <header class="px-4 md:px-12 lg:px-25 xl:px-32 2xl:px-48 lg:py-8 overflow-hidden" ref="homeSection">
-      <div class="min-h-screen max-w-screen-2xl mx-auto flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-center gap-10 lg:gap-0">
+    <header class="relative z-10 px-4 md:px-12 lg:px-25 xl:px-32 2xl:px-48 lg:py-8 overflow-hidden" ref="homeSection">
+      <div
+        class="min-h-screen max-w-screen-2xl mx-auto flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-center gap-10 lg:gap-0">
 
         <div class="w-full text-center lg:text-left flex flex-col items-center lg:items-start">
           <p class="text-2xl font-semibold tracking-widest mt-1 dark:text-gray-400">
             Hi, I am <span class="font-bold text-[#ff004f]">Luc</span>
           </p>
-          <h1 class="my-1 lg:my-3 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-widest leading-none text-gray-900 dark:text-gray-100">
+          <h1
+            class="my-1 lg:my-3 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-widest leading-none text-gray-900 dark:text-gray-100">
             Full Stack <br class="hidden lg:block"> Developer
           </h1>
           <p class="text-sm lg:text-base text-gray-600 dark:text-gray-400 my-3 lg:my-4 max-w-md">
             Architecting modern websites and dynamic web applications with passion and precision.
           </p>
-          <Btn 
-            href="/CV_Randriamiharisoa_Jean_Luc.pdf" 
-            download="CV_Randriamiharisoa_Jean_Luc.pdf"
-          >
+          <Btn href="/CV_Randriamiharisoa_Jean_Luc.pdf" download="CV_Randriamiharisoa_Jean_Luc.pdf">
             <i class="pi pi-download mr-2"></i> Download Resume
           </Btn>
         </div>
@@ -161,7 +160,8 @@ function scrollToSection(id) {
     <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="aboutSection">
       <Title>About Me</Title>
       <div class="flex flex-col md:flex-row px-3 md:px-7 py-10 gap-4 items-stretch">
-        <div class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
+        <div
+          class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
           <img src="/src/assets/2.png" alt="" class="w-full h-full object-cover object-top">
         </div>
         <div class="flex-1 bg-black/10 backdrop-blur-md rounded-2xl tracking-tight p-4 sm:p-8">
@@ -169,10 +169,12 @@ function scrollToSection(id) {
             Hi, My name is Randriamiharisoa Jean Luc.
           </div>
           <div class="mb-1 text-gray-500 dark:text-gray-300">
-            "A Developer passionate about building meaningful digital experiences. With a focus on clean code, thoughtful design, and scalable solutions, I help turn ideas into products that people love to use.
+            "A Developer passionate about building meaningful digital experiences. With a focus on clean code,
+            thoughtful design, and scalable solutions, I help turn ideas into products that people love to use.
           </div>
           <div class="text-gray-500 dark:text-gray-300">
-            I specialize in Web Development, cross-platform applications, and UI/UX design, blending creativity with technical expertise to deliver work that's both functional and visually compelling."
+            I specialize in Web Development, cross-platform applications, and UI/UX design, blending creativity with
+            technical expertise to deliver work that's both functional and visually compelling."
           </div>
           <Tabs />
         </div>
@@ -209,13 +211,15 @@ function scrollToSection(id) {
 
           <div class="space-y-3 mb-7 lg:mb-10">
             <div class="flex gap-5 items-center group duration-500">
-              <div class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
+              <div
+                class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
                 <i class="pi pi-envelope text-xl text-[#ff004f] group-hover:text-white duration-500"></i>
               </div>
               <p class="text-xl font-medium text-gray-700 dark:text-gray-400">Lucharisoaa@gmail.com</p>
             </div>
             <div class="flex gap-5 items-center group duration-500">
-              <div class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
+              <div
+                class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
                 <i class="pi pi-phone text-xl text-[#ff004f] group-hover:text-white duration-500"></i>
               </div>
               <p class="text-xl font-medium text-gray-700 dark:text-gray-400">+261 34 15 970 15</p>
@@ -237,12 +241,13 @@ function scrollToSection(id) {
     </footer>
 
   </main>
-  <div class="p-8 z-[1000]">
+  <div class="fixed bottom-8 right-8 z-[1000]">
     <Toast />
   </div>
 </template>
 
 <style scoped>
+<<<<<<< HEAD
 #fluid-canvas {
   position: fixed;
   width: 100vw;
@@ -252,4 +257,6 @@ function scrollToSection(id) {
   left: 0;
   pointer-events: auto;
 }
+=======
+>>>>>>> eb46e54 (1st commit)
 </style>

@@ -2,11 +2,13 @@
 import Title from './components/Title.vue';
 import Btn from './components/Btn.vue';
 import Project from './components/Project.vue';
+import FluidCanvas from './components/FluidCanvas.vue';
 </script>
 
 <template>
   <main class="min-h-screen text-slate-900 py-8 px-4 md:px-8 lg:px-16 xl:px-24">
-    <section class="mx-auto max-w-6xl">
+    <FluidCanvas />
+    <section class="mx-auto max-w-6xl z-50">
       <div class="w-[calc(100%-2rem)] xl:w-[calc(100%-6rem)] 2xl:w-[calc(100%-10rem)] max-w-screen-2xl m-auto h-14 lg:h-15 xl:h-16 fixed top-4 lg:top-5 left-1/2 -translate-x-1/2 z-[1000] cursor-pointer  bg-black/10 backdrop-blur-md rounded-full border-3 border-[#ff004f]  flex justify-between items-center px-5 lg:px-8 xl:px-10">
           <div class="text-center">
             <h2 class="mx-6 text-2xl font-bold dark:text-gray-100 tracking-widest">PROJECTS</h2>
