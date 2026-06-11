@@ -10,10 +10,7 @@ app.use(PrimeVue, {
     theme: {
         preset: Aura,
         options: {
-<<<<<<< HEAD
-=======
             darkModeSelector: 'none',
->>>>>>> eb46e54 (1st commit)
             cssLayer: {
                 name: 'primevue',
                 order: 'tailwind-base, primevue, tailwind-utilities'
