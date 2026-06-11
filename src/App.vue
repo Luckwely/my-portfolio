@@ -87,16 +87,11 @@ function scrollToSection(id) {
 </script>
 
 <template>
-<<<<<<< HEAD
-  <main class="w-full h-screen">
-  <canvas ref="fluidCanvas" id="fluid-canvas" />
-    <Nav>
-=======
+
   <main class="relative isolate w-full min-h-screen overflow-x-hidden">
     <FluidCanvas />
 
     <Nav class="absolute top-2 z-10">
->>>>>>> eb46e54 (1st commit)
       <!-- Logo -->
       <p class="font-bold text-2xl">
         Luc<span class="text-[#ff004f] font-extrabold">&lt;/&gt;</span>
