@@ -145,7 +145,7 @@ onMounted(async () => {
 
               <template #content="slotProps">
                 <div class="mb-5 ml-6">
-                  <h3 class="text-xl font-bold text-gray-800 dark:text-gray-400 leading-tight">
+                  <h3 class="text-xl font-bold text-gray-800  leading-tight">
                     {{ slotProps.item.status }}
                   </h3>
                   
@@ -155,8 +155,7 @@ onMounted(async () => {
 
                   <div v-if="slotProps.item.skills" class="flex flex-wrap gap-2 mt-3">
                     <span v-for="skill in slotProps.item.skills.split(', ')" :key="skill"
-                          class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-semibold rounded border border-gray-200 dark:bg-[#ff004f]/8 dark:text-[#ff004f] dark:border dark:border-[#ff004f]/15
-                 dark:transition-colors dark:duration-300 dark:group-hover:bg-[#ff004f]/15">
+                          class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-semibold rounded border border-gray-200   ">
                       {{ skill }}
                     </span>
                   </div>

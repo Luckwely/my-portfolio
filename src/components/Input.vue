@@ -81,7 +81,7 @@ const sendEmail = () => {
 
     <form ref="contactForm" @submit.prevent="sendEmail">
         <h1 class="text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-2">Make an Appointment</h1>
-        <p class="mb-5 text-gray-500 dark:text-gray-400 xl:text-lg">Feel free to contact with us, we don't spam your email</p>
+        <p class="mb-5 text-gray-500  xl:text-lg">Feel free to contact with us, we don't spam your email</p>
         <input type="hidden" name="time" value="">
         
         <div>
@@ -90,7 +90,7 @@ const sendEmail = () => {
                 type="text" 
                 name="from_name" 
                 placeholder="Your name"
-                class="outline-none border border-gray-500 dark:border-gray-700 focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-600 transition-all duration-300"
+                class="outline-none border border-gray-500  focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white  text-gray-800  placeholder-gray-500  transition-all duration-300"
             >
         </div>
         
@@ -100,7 +100,7 @@ const sendEmail = () => {
                 type="text" 
                 name="reply_to" 
                 placeholder="Your email"
-                class="outline-none border border-gray-500 dark:border-gray-700 focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-600 transition-all duration-300"
+                class="outline-none border border-gray-500  focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white  text-gray-800  placeholder-gray-500  transition-all duration-300"
             >
         </div>
         
@@ -110,7 +110,7 @@ const sendEmail = () => {
                 name="message" 
                 rows="6" 
                 placeholder="Your comment"
-                class="outline-none border border-gray-500 dark:border-gray-700 focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-600 transition-all duration-300"
+                class="outline-none border border-gray-500  focus:border-[#ff004f] rounded-xl py-2 xl:py-3 px-4 xl:text-lg w-full mb-2 bg-white  text-gray-800  placeholder-gray-500  transition-all duration-300"
             ></textarea>
         </div>
         
