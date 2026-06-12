@@ -116,7 +116,7 @@ function scrollToSection(id) {
                z-50 tracking-widest">
         <li v-for="(label, idx) in ['Home', 'About', 'Services', 'Projects', 'Contact']" :key="idx"
           @click="scrollToSection(String(idx))"
-          :class="value === String(idx) ? 'text-[#ff004f] font-extrabold' : 'text-white dark:text-gray-100 md:text-black'"
+          :class="value === String(idx) ? 'text-[#ff004f] font-extrabold' : 'text-white md:text-black'"
           class="cursor-pointer list-none text-base transition-colors duration-300 hover:text-[#ff004f]">
           {{ label }}
         </li>
@@ -129,14 +129,14 @@ function scrollToSection(id) {
         class="min-h-screen max-w-screen-2xl mx-auto flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-center gap-10 lg:gap-0">
 
         <div class="w-full text-center lg:text-left flex flex-col items-center lg:items-start">
-          <p class="text-2xl font-semibold tracking-widest mt-1 dark:text-gray-400">
+          <p class="text-2xl font-semibold tracking-widest mt-1 ">
             Hi, I am <span class="font-bold text-[#ff004f]">Luc</span>
           </p>
           <h1
-            class="my-1 lg:my-3 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-widest leading-none text-gray-900 dark:text-gray-100">
+            class="my-1 lg:my-3 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-widest leading-none text-gray-900 ">
             Full Stack <br class="hidden lg:block"> Developer
           </h1>
-          <p class="text-sm lg:text-base text-gray-600 dark:text-gray-400 my-3 lg:my-4 max-w-md">
+          <p class="text-sm lg:text-base text-gray-600  my-3 lg:my-4 max-w-md">
             Architecting modern websites and dynamic web applications with passion and precision.
           </p>
           <Btn href="/CV_Randriamiharisoa_Jean_Luc.pdf" download="CV_Randriamiharisoa_Jean_Luc.pdf">
@@ -160,14 +160,14 @@ function scrollToSection(id) {
           <img src="/src/assets/2.png" alt="" class="w-full h-full object-cover object-top">
         </div>
         <div class="flex-1 bg-black/10 backdrop-blur-md rounded-2xl tracking-tight p-4 sm:p-8">
-          <div class="mb-1 font-bold text-2xl text-gray-900 dark:text-gray-100">
+          <div class="mb-1 font-bold text-2xl text-gray-900 ">
             Hi, My name is Randriamiharisoa Jean Luc.
           </div>
-          <div class="mb-1 text-gray-500 dark:text-gray-300">
+          <div class="mb-1 text-gray-500 ">
             "A Developer passionate about building meaningful digital experiences. With a focus on clean code,
             thoughtful design, and scalable solutions, I help turn ideas into products that people love to use.
           </div>
-          <div class="text-gray-500 dark:text-gray-300">
+          <div class="text-gray-500 0">
             I specialize in Web Development, cross-platform applications, and UI/UX design, blending creativity with
             technical expertise to deliver work that's both functional and visually compelling."
           </div>
@@ -200,7 +200,7 @@ function scrollToSection(id) {
 
         <div class="bg-black/10 backdrop-blur-md rounded-2xl flex-1 p-4 sm:p-8">
           <h2 class="text-xl lg:text-2xl font-bold text-gray-500 mb-2">Have a project?</h2>
-          <h1 class="text-6xl lg:text-8xl font-black tracking-tight text-gray-900 dark:text-gray-100 mb-7 lg:mb-8">
+          <h1 class="text-6xl lg:text-8xl font-black tracking-tight text-gray-900  mb-7 lg:mb-8">
             Let's <span class="text-[#ff004f]">talk</span>
           </h1>
 
@@ -210,14 +210,14 @@ function scrollToSection(id) {
                 class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
                 <i class="pi pi-envelope text-xl text-[#ff004f] group-hover:text-white duration-500"></i>
               </div>
-              <p class="text-xl font-medium text-gray-700 dark:text-gray-400">Lucharisoaa@gmail.com</p>
+              <p class="text-xl font-medium text-gray-700 ">Lucharisoaa@gmail.com</p>
             </div>
             <div class="flex gap-5 items-center group duration-500">
               <div
                 class="w-12 h-12 rounded-full bg-[#ff004f]/10 flex items-center justify-center transition-colors duration-500 group-hover:bg-[#ff004f]">
                 <i class="pi pi-phone text-xl text-[#ff004f] group-hover:text-white duration-500"></i>
               </div>
-              <p class="text-xl font-medium text-gray-700 dark:text-gray-400">+261 34 15 970 15</p>
+              <p class="text-xl font-medium text-gray-700 ">+261 34 15 970 15</p>
             </div>
           </div>
 
