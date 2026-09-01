@@ -8,16 +8,37 @@
     </script>
 
     <style scoped>
-    /* Optional: ensures no default underline styling appears if it renders as an anchor link */
-    a {
-    text-decoration: none;
-    }
-</style>
+        /* Optional: ensures no default underline styling appears if it renders as an anchor link */
+        a {
+        text-decoration: none;
+        }
+
+        .stagger-btn {
+          display: inline-flex;
+          align-items: center;
+          padding: 12px 28px;
+          background: #ff004f;
+          border-radius: 9999px;
+          border: 3px solid #ff004f;
+          color: white;
+          font-size: 16px;
+          line-height: 1;
+          cursor: pointer;
+          transition: all 0.5s;
+          text-decoration: none;
+          overflow: hidden;
+        }
+
+        .stagger-btn:hover {
+          background: transparent;
+          color: #ff004f;
+        }
+    </style>
 <template>
   <component
     :is="href ? 'a' : 'button'"
     :href="href"
-    class="py-2 px-6 bg-[#ff004f] rounded-full tracking-wide duration-[0.5s] text-white font-semibold cursor-pointer tracking-tight hover:text-[#ff004f] hover:bg-transparent border-2 border-[#ff004f] inline-flex items-center justify-center decoration-none"
+    class="stagger-btn"
   >
     <slot />
   </component>

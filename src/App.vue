@@ -12,6 +12,11 @@ import Input from './components/Input.vue';
 import Toast from 'primevue/toast';
 import Social from './components/Social.vue';
 import FluidCanvas from './components/FluidCanvas.vue';
+import { collection, query, orderBy, getDocs, Query } from 'firebase/firestore';
+import { db } from './firebase';
+
+const text= "Download Resume";
+const letters = text.split('');
 
 const isMenuOpen = ref(false);
 const value = ref('0');
@@ -21,33 +26,46 @@ const servicesSection = ref(null);
 const projectsSection = ref(null);
 const contactSection = ref(null);
 const sections = ref([]);
+const fluidCanvas = ref(null);
+const showProjectsModal = ref(false);
+const allProjects = ref([]);
 
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;
 }
-const fluidCanvas = ref(null);
 
-onMounted(() => {
+function openModal() {
+  showProjectsModal.value = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  showProjectsModal.value = false;
+  document.body.style.overflow = '';
+}
+
+onMounted(async() => {
   if (fluidCanvas.value) {
     webGLFluidEnhanced.simulation(fluidCanvas.value, {
-  SIM_RESOLUTION: 128,
-  DYE_RESOLUTION: 1024,
-  DENSITY_DISSIPATION: 0.998,   // very close to 1 = smoke stays very long
-  VELOCITY_DISSIPATION: 0.99,
-  PRESSURE: 0.1,
-  SPLAT_RADIUS: 0.9,            // ← was 0.25, now 0.5 = much bigger plume
-  SPLAT_FORCE: 20000,           // ← was 8000, stronger push = spreads further
-  SPLAT_COUNT: 0,
-  SHADING: true,
-  COLORFUL: false,
-  BLOOM: false,
-  COLOR_PALETTE: ['#ff004f'],
-  BACK_COLOR: { r: 0, g: 0, b: 0 },
-  TRANSPARENT: true,
-  HOVER: false,
-  PAUSE: false,
-});
+      SIM_RESOLUTION: 128,
+      DYE_RESOLUTION: 1024,
+      DENSITY_DISSIPATION: 0.998,   
+      VELOCITY_DISSIPATION: 0.99,
+      PRESSURE: 0.1,
+      SPLAT_RADIUS: 0.9,            
+      SPLAT_FORCE: 20000,           
+      SPLAT_COUNT: 0,
+      SHADING: true,
+      COLORFUL: false,
+      BLOOM: false,
+      COLOR_PALETTE: ['#ff004f'],
+      BACK_COLOR: { r: 0, g: 0, b: 0 },
+      TRANSPARENT: true,
+      HOVER: false,
+      PAUSE: false,
+    });
   }
+
   sections.value = [
     { el: homeSection.value, id: '0' },
     { el: aboutSection.value, id: '1' },
@@ -57,10 +75,29 @@ onMounted(() => {
   ];
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
+
+  console.log("DB:", db);
+
+  try {
+    const q= query(collection(db, "projects"),
+    orderBy('order', 'asc'));
+
+    const querySnapshot = await getDocs(q);
+    allProjects.value = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        num: String(data.order).padStart(2,'0'),
+        ...data
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('scroll', handleScroll);
 });
 
 function handleScroll() {
@@ -93,7 +130,7 @@ function scrollToSection(id) {
 
     <Nav class="absolute top-2 z-10">
       <!-- Logo -->
-      <p class="font-bold text-2xl">
+      <p class="font-bold text-2xl logo">
         Luc<span class="text-[#ff004f] font-extrabold">&lt;/&gt;</span>
       </p>
 
@@ -140,7 +177,11 @@ function scrollToSection(id) {
             Architecting modern websites and dynamic web applications with passion and precision.
           </p>
           <Btn href="/CV_Randriamiharisoa_Jean_Luc.pdf" download="CV_Randriamiharisoa_Jean_Luc.pdf">
-            <i class="pi pi-download mr-2"></i> Download Resume
+            <i class="pi pi-download mr-2"></i>
+            <span v-for="(letter, i) in letters" :key="i" class="letter" :style="{'--delay': i * 0.05 + 's'}">
+                <span class="top">{{ letter }}</span>
+                <span class="bottom">{{ letter }}</span>
+            </span>
           </Btn>
         </div>
 
@@ -186,10 +227,10 @@ function scrollToSection(id) {
     <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="projectsSection">
       <Title>My Projects</Title>
       <div class="px-3 md:px-7 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 [&>*]:min-w-0">
-        <Project :limit="3" />
+        <Project v-for="p in allProjects.slice(0,3)" :key="p.id" :project="p" />
       </div>
       <div class="text-center">
-        <Btn href="/all-projects.html">View More</Btn>
+        <Btn @click="openModal">View More</Btn>
       </div>
     </section>
 
@@ -235,6 +276,27 @@ function scrollToSection(id) {
       <p>Copyright © Luc. All rights reserved.</p>
     </footer>
 
+    <Teleport to='body' >
+      <transition name="fade">
+        <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center p-4" @click="closeModal">
+          <div class="bg-white border-3 border-[#ff004f] rounded-2xl w-full max-w-6xl h- p-6 flex-col" @click.stop>
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl font-bold text-black mb-2">All Projects ({{ allProjects.length }})</h2>
+              <div @click="closeModal" class="text-[#ff004f] text-6xl"><i class="pi pi-times"></i></div>
+            </div>
+            <div class="flex-1 overflow-y-auto">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Project
+                  v-for="p in allProjects"
+                  :key="p.id"
+                  :project="p"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </Teleport>
   </main>
   <div class="fixed bottom-8 right-8 z-[1000]">
     <Toast />
@@ -242,5 +304,58 @@ function scrollToSection(id) {
 </template>
 
 <style scoped>
+.logo {
+  transform-style: preserve-3d;
+  animation: flip 6s ease-in-out infinite;
+}
 
+@keyframes flip {
+  0% {transform: rotateY(0deg);}
+  25% {transform: rotateY(360deg);}
+  50% {transform: rotateY(360deg);}
+  75% {transform: rotateY(0deg);}
+  100% {transform: rotateY(0deg);}
+}
+
+.rolling-text {
+  display: inline-flex;
+  height:1em;
+  line-height: 1em;
+}
+
+.letter {
+  position: relative;
+  display: inline-block;
+  width: 0.85em;
+  height: 1em;
+  overflow: hidden;        
+}
+
+.letter span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: block;
+  animation: rollLoop 3s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.bottom {
+  top: 100%;
+}
+
+@keyframes rollLoop {
+  0% {transform: translateY(0);}
+  20% {transform: translateY(0);}
+  40% {transform: translateY(-100%);}
+  60% {transform: translateY(-100%);}
+  80% {transform: translateY(0);}
+  100% {transform: translateY(0);}
+}
+
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 </style>

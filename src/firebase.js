@@ -1,4 +1,4 @@
-// src/firebase.js
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
@@ -11,8 +11,6 @@ const firebaseConfig = {
   appId: "1:623855223893:web:e2b34be30da983636f83ec"
 };
 
-// Initialize Firebase instance
 const app = initializeApp(firebaseConfig);
 
-// Export firestore instance for your views to query
 export const db = getFirestore(app);
