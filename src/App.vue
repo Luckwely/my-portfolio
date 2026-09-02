@@ -287,7 +287,7 @@
       <transition name="fade">
         <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center" @click="closeModal">
 
-          <div class=" bg-white border-2 border-[#ff004f] w-full h-[100dvh] flex flex-col" @click.stop>
+          <div class=" bg-white border-2 w-full h-[100dvh] flex flex-col" @click.stop>
             
             <div class="p-3 sm:p-4 flex-shrink-0">
               <div class="flex items-center justify-between mb-2">
