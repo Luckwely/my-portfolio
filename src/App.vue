@@ -1,125 +1,131 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import webGLFluidEnhanced from 'webgl-fluid-enhanced'; 
-import Nav from './components/Nav.vue';
-import Btn from './components/Btn.vue';
-import Ripple from './components/Ripple.vue';
-import Tabs from './components/Tabs.vue';
-import Title from './components/Title.vue';
-import Service from './components/Service.vue';
-import Project from './components/Project.vue';
-import Input from './components/Input.vue';
-import Toast from 'primevue/toast';
-import Social from './components/Social.vue';
-import FluidCanvas from './components/FluidCanvas.vue';
-import { collection, query, orderBy, getDocs, Query } from 'firebase/firestore';
-import { db } from './firebase';
+  import { ref, onMounted, onUnmounted, computed } from 'vue';
+  import webGLFluidEnhanced from 'webgl-fluid-enhanced'; 
+  import Nav from './components/Nav.vue';
+  import Btn from './components/Btn.vue';
+  import Ripple from './components/Ripple.vue';
+  import Tabs from './components/Tabs.vue';
+  import Title from './components/Title.vue';
+  import Service from './components/Service.vue';
+  import Project from './components/Project.vue';
+  import Input from './components/Input.vue';
+  import Toast from 'primevue/toast';
+  import Social from './components/Social.vue';
+  import FluidCanvas from './components/FluidCanvas.vue';
+  import { collection, query, orderBy, getDocs, Query } from 'firebase/firestore';
+  import { db } from './firebase';
 
-const text= "Download Resume";
-const letters = text.split('');
+  const text= "Download Resume";
+  const letters = text.split('');
 
-const isMenuOpen = ref(false);
-const value = ref('0');
-const homeSection = ref(null);
-const aboutSection = ref(null);
-const servicesSection = ref(null);
-const projectsSection = ref(null);
-const contactSection = ref(null);
-const sections = ref([]);
-const fluidCanvas = ref(null);
-const showProjectsModal = ref(false);
-const allProjects = ref([]);
+  const isMenuOpen = ref(false);
+  const value = ref('0');
+  const homeSection = ref(null);
+  const aboutSection = ref(null);
+  const servicesSection = ref(null);
+  const projectsSection = ref(null);
+  const contactSection = ref(null);
+  const sections = ref([]);
+  const fluidCanvas = ref(null);
+  const showProjectsModal = ref(false);
+  const allProjects = ref([]);
+  const searchQuery = ref("");
 
-function toggleMenu() {
-  isMenuOpen.value = !isMenuOpen.value;
-}
+  const filteredProjects = computed(() => {
+    if(!searchQuery.value) return allProjects.value;
+    return allProjects.value.filter(p => p.title.toLowerCase().includes(searchQuery.value.toLowerCase()))
+  })
 
-function openModal() {
-  showProjectsModal.value = true;
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  showProjectsModal.value = false;
-  document.body.style.overflow = '';
-}
-
-onMounted(async() => {
-  if (fluidCanvas.value) {
-    webGLFluidEnhanced.simulation(fluidCanvas.value, {
-      SIM_RESOLUTION: 128,
-      DYE_RESOLUTION: 1024,
-      DENSITY_DISSIPATION: 0.998,   
-      VELOCITY_DISSIPATION: 0.99,
-      PRESSURE: 0.1,
-      SPLAT_RADIUS: 0.9,            
-      SPLAT_FORCE: 20000,           
-      SPLAT_COUNT: 0,
-      SHADING: true,
-      COLORFUL: false,
-      BLOOM: false,
-      COLOR_PALETTE: ['#ff004f'],
-      BACK_COLOR: { r: 0, g: 0, b: 0 },
-      TRANSPARENT: true,
-      HOVER: false,
-      PAUSE: false,
-    });
+  function toggleMenu() {
+    isMenuOpen.value = !isMenuOpen.value;
   }
 
-  sections.value = [
-    { el: homeSection.value, id: '0' },
-    { el: aboutSection.value, id: '1' },
-    { el: servicesSection.value, id: '2' },
-    { el: projectsSection.value, id: '3' },
-    { el: contactSection.value, id: '4' },
-  ];
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
-
-  console.log("DB:", db);
-
-  try {
-    const q= query(collection(db, "projects"),
-    orderBy('order', 'asc'));
-
-    const querySnapshot = await getDocs(q);
-    allProjects.value = querySnapshot.docs.map(doc => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        num: String(data.order).padStart(2,'0'),
-        ...data
-      }
-    });
-  } catch (error) {
-    console.error("Error fetching projects:", error);
+  function openModal() {
+    showProjectsModal.value = true;
+    document.body.style.overflow = 'hidden';
   }
-});
 
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
+  function closeModal() {
+    showProjectsModal.value = false;
+    document.body.style.overflow = '';
+  }
 
-function handleScroll() {
-  const scrollPos = window.scrollY + 200;
-  sections.value.forEach((section) => {
-    const el = section.el;
-    if (!el) return;
-    const top = el.offsetTop;
-    const bottom = top + el.offsetHeight;
-    if (scrollPos >= top && scrollPos < bottom) {
-      value.value = section.id;
+  onMounted(async() => {
+    if (fluidCanvas.value) {
+      webGLFluidEnhanced.simulation(fluidCanvas.value, {
+        SIM_RESOLUTION: 128,
+        DYE_RESOLUTION: 1024,
+        DENSITY_DISSIPATION: 0.998,   
+        VELOCITY_DISSIPATION: 0.99,
+        PRESSURE: 0.1,
+        SPLAT_RADIUS: 0.9,            
+        SPLAT_FORCE: 20000,           
+        SPLAT_COUNT: 0,
+        SHADING: true,
+        COLORFUL: false,
+        BLOOM: false,
+        COLOR_PALETTE: ['#ff004f'],
+        BACK_COLOR: { r: 0, g: 0, b: 0 },
+        TRANSPARENT: true,
+        HOVER: false,
+        PAUSE: false,
+      });
+    }
+
+    sections.value = [
+      { el: homeSection.value, id: '0' },
+      { el: aboutSection.value, id: '1' },
+      { el: servicesSection.value, id: '2' },
+      { el: projectsSection.value, id: '3' },
+      { el: contactSection.value, id: '4' },
+    ];
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    console.log("DB:", db);
+
+    try {
+      const q= query(collection(db, "projects"),
+      orderBy('order', 'asc'));
+
+      const querySnapshot = await getDocs(q);
+      allProjects.value = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          num: String(data.order).padStart(2,'0'),
+          ...data
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching projects:", error);
     }
   });
-}
 
-function scrollToSection(id) {
-  isMenuOpen.value = false;
-  const section = sections.value.find(s => s.id === id);
-  if (section && section.el) {
-    section.el.scrollIntoView({ behavior: 'smooth' });
+  onUnmounted(() => {
+      window.removeEventListener('scroll', handleScroll);
+  });
+
+  function handleScroll() {
+    const scrollPos = window.scrollY + 200;
+    sections.value.forEach((section) => {
+      const el = section.el;
+      if (!el) return;
+      const top = el.offsetTop;
+      const bottom = top + el.offsetHeight;
+      if (scrollPos >= top && scrollPos < bottom) {
+        value.value = section.id;
+      }
+    });
   }
-}
+
+  function scrollToSection(id) {
+    isMenuOpen.value = false;
+    const section = sections.value.find(s => s.id === id);
+    if (section && section.el) {
+      section.el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
 </script>
 
@@ -134,7 +140,7 @@ function scrollToSection(id) {
         Luc<span class="text-[#ff004f] font-extrabold">&lt;/&gt;</span>
       </p>
 
-      <!-- Hamburger (mobile only) -->
+      <!-- Hamburger mobile -->
       <button type="button" class="md:hidden w-10 h-10 flex items-center justify-center focus:outline-none"
         @click="toggleMenu">
         <i :class="isMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
@@ -158,6 +164,7 @@ function scrollToSection(id) {
           {{ label }}
         </li>
       </div>
+
     </Nav>
 
     <!-- Hero -->
@@ -276,86 +283,103 @@ function scrollToSection(id) {
       <p>Copyright © Luc. All rights reserved.</p>
     </footer>
 
-    <Teleport to='body' >
+    <Teleport to='body'>
       <transition name="fade">
-        <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center p-4" @click="closeModal">
-          <div class="bg-white border-3 border-[#ff004f] rounded-2xl w-full max-w-6xl h- p-6 flex-col" @click.stop>
-            <div class="flex items-center justify-between">
-              <h2 class="text-2xl font-bold text-black mb-2">All Projects ({{ allProjects.length }})</h2>
-              <div @click="closeModal" class="text-[#ff004f] text-6xl"><i class="pi pi-times"></i></div>
-            </div>
-            <div class="flex-1 overflow-y-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Project
-                  v-for="p in allProjects"
-                  :key="p.id"
-                  :project="p"
-                />
+        <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center" @click="closeModal">
+
+          <div class=" bg-white border-2 border-[#ff004f] w-full h-screen flex-col" @click.stop>
+            
+            <div class="fixed top-0 mx-auto w-[100%] p-4">
+              <div class="flex items-center justify-between mb-4 flex-shrink-0">
+                <h2 class="text-2xl font-bold text-black mb-2">All Projects ({{ allProjects.length }})</h2>
+                <button @click="closeModal" class="pi pi-times text-[#ff004f] text-4xl"></button>
+              </div>
+  
+              <div class="mb-4 flex-shrink-0 ">
+                <input v-model="searchQuery" type="text" placeholder="Search project by title..." class="w-full bg-black/20 border-[#ff004f]/30 rounded-lg px-4 py-3 placeholder-gray-500 focus:outline-none focus:border-[#ff004f]">
               </div>
             </div>
+
+            <div>
+              <div class="mt-30 overflow-y-auto p-4">
+                <div v-if="filteredProjects.length === 0" class="text-gray-500 text-center mt-10">No projects found</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Project
+                    v-for="p in filteredProjects"
+                    :key="p.id"
+                    :project="p"
+                  />
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </transition>
     </Teleport>
+
   </main>
+
   <div class="fixed bottom-8 right-8 z-[1000]">
     <Toast />
   </div>
+
 </template>
 
 <style scoped>
-.logo {
-  transform-style: preserve-3d;
-  animation: flip 6s ease-in-out infinite;
-}
+  .logo {
+    transform-style: preserve-3d;
+    animation: flip 6s ease-in-out infinite;
+  }
 
-@keyframes flip {
-  0% {transform: rotateY(0deg);}
-  25% {transform: rotateY(360deg);}
-  50% {transform: rotateY(360deg);}
-  75% {transform: rotateY(0deg);}
-  100% {transform: rotateY(0deg);}
-}
+  @keyframes flip {
+    0% {transform: rotateY(0deg);}
+    25% {transform: rotateY(360deg);}
+    50% {transform: rotateY(360deg);}
+    75% {transform: rotateY(0deg);}
+    100% {transform: rotateY(0deg);}
+  }
 
-.rolling-text {
-  display: inline-flex;
-  height:1em;
-  line-height: 1em;
-}
+  .rolling-text {
+    display: inline-flex;
+    height:1em;
+    line-height: 1em;
+  }
 
-.letter {
-  position: relative;
-  display: inline-block;
-  width: 0.85em;
-  height: 1em;
-  overflow: hidden;        
-}
+  .letter {
+    position: relative;
+    display: inline-block;
+    width: 0.85em;
+    height: 1em;
+    overflow: hidden;        
+  }
 
-.letter span {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  display: block;
-  animation: rollLoop 3s ease-in-out infinite;
-  animation-delay: var(--delay);
-}
+  .letter span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: block;
+    animation: rollLoop 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
 
-.bottom {
-  top: 100%;
-}
+  .bottom {
+    top: 100%;
+  }
 
-@keyframes rollLoop {
-  0% {transform: translateY(0);}
-  20% {transform: translateY(0);}
-  40% {transform: translateY(-100%);}
-  60% {transform: translateY(-100%);}
-  80% {transform: translateY(0);}
-  100% {transform: translateY(0);}
-}
+  @keyframes rollLoop {
+    0% {transform: translateY(0);}
+    20% {transform: translateY(0);}
+    40% {transform: translateY(-100%);}
+    60% {transform: translateY(-100%);}
+    80% {transform: translateY(0);}
+    100% {transform: translateY(0);}
+  }
 
 
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
+  .fade-enter-from, .fade-leave-to {
+    opacity: 0;
+  }
 </style>
