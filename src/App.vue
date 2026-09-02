@@ -287,10 +287,10 @@
       <transition name="fade">
         <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center" @click="closeModal">
 
-          <div class=" bg-white border-2 border-[#ff004f] w-full h-screen flex-col" @click.stop>
+          <div class=" bg-white border-2 border-[#ff004f] w-full h-screen flex flex-col" @click.stop>
             
-            <div class="fixed top-0 mx-auto w-[100%] p-4">
-              <div class="flex items-center justify-between mb-4 flex-shrink-0">
+            <div class="p-4 flex-shrink-0">
+              <div class="flex items-center justify-between mb-4">
                 <h2 class="text-2xl font-bold text-black mb-2">All Projects ({{ allProjects.length }})</h2>
                 <button @click="closeModal" class="pi pi-times text-[#ff004f] text-4xl"></button>
               </div>
@@ -300,8 +300,7 @@
               </div>
             </div>
 
-            <div>
-              <div class="mt-30 overflow-y-auto p-4">
+              <div class="flex-1 overflow-y-auto p-4">
                 <div v-if="filteredProjects.length === 0" class="text-gray-500 text-center mt-10">No projects found</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Project
@@ -311,7 +310,6 @@
                   />
                 </div>
               </div>
-            </div>
 
           </div>
 
