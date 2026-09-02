@@ -287,15 +287,15 @@
       <transition name="fade">
         <div v-if="showProjectsModal" class="fixed inset-0 z-[999] bg-white/5 backdrop-blur-md  flex items-center justify-center" @click="closeModal">
 
-          <div class=" bg-white border-2 border-[#ff004f] w-full h-screen flex flex-col" @click.stop>
+          <div class=" bg-white border-2 border-[#ff004f] w-full h-[100dvh] flex flex-col" @click.stop>
             
-            <div class="p-4 flex-shrink-0">
-              <div class="flex items-center justify-between mb-4">
+            <div class="p-3 sm:p-4 flex-shrink-0">
+              <div class="flex items-center justify-between mb-2">
                 <h2 class="text-2xl font-bold text-black mb-2">All Projects ({{ allProjects.length }})</h2>
                 <button @click="closeModal" class="pi pi-times text-[#ff004f] text-4xl"></button>
               </div>
   
-              <div class="mb-4 flex-shrink-0 ">
+              <div class="mb-2 flex-shrink-0 ">
                 <input v-model="searchQuery" type="text" placeholder="Search project by title..." class="w-full bg-black/20 border-[#ff004f]/30 rounded-lg px-4 py-3 placeholder-gray-500 focus:outline-none focus:border-[#ff004f]">
               </div>
             </div>
