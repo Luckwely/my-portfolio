@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted, onUnmounted, computed } from 'vue';
+  import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
   import webGLFluidEnhanced from 'webgl-fluid-enhanced'; 
   import Nav from './components/Nav.vue';
   import Btn from './components/Btn.vue';
@@ -14,6 +14,8 @@
   import FluidCanvas from './components/FluidCanvas.vue';
   import { collection, query, orderBy, getDocs, Query } from 'firebase/firestore';
   import { db } from './firebase';
+  import AOS from 'aos';
+  import 'aos/dist/aos.css';
 
   const text= "Download Resume";
   const letters = text.split('');
@@ -43,6 +45,9 @@
   function openModal() {
     showProjectsModal.value = true;
     document.body.style.overflow = 'hidden';
+    nextTick(() => {
+      AOS.refresh();
+    })
   }
 
   function closeModal() {
@@ -51,6 +56,14 @@
   }
 
   onMounted(async() => {
+
+    AOS.init({
+      duration: 800,
+      once: false,
+      offset: 120,
+      mirror: true
+    });
+
     if (fluidCanvas.value) {
       webGLFluidEnhanced.simulation(fluidCanvas.value, {
         SIM_RESOLUTION: 128,
@@ -79,6 +92,7 @@
       { el: projectsSection.value, id: '3' },
       { el: contactSection.value, id: '4' },
     ];
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
@@ -97,6 +111,10 @@
           ...data
         }
       });
+
+      await nextTick();
+      AOS.refresh();
+
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
@@ -173,26 +191,28 @@
         class="min-h-screen max-w-screen-2xl mx-auto flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-center gap-10 lg:gap-0">
 
         <div class="w-full text-center lg:text-left flex flex-col items-center lg:items-start">
-          <p class="text-2xl font-semibold tracking-widest mt-1 ">
+          <p data-aos="fade-down" data-aos-delay="100" class="text-xl md:text-2xl lg:text-3xl font-semibold tracking-widest mt-1 ">
             Hi, I am <span class="font-bold text-[#ff004f]">Luc</span>
           </p>
-          <h1
-            class="my-1 lg:my-3 text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-widest leading-none text-gray-900 ">
+          <h1 data-aos="fade-down" data-aos-delay="200"
+            class="my-1 lg:my-3 text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-extrabold tracking-widest leading-none text-gray-900 ">
             Full Stack <br class="hidden lg:block"> Developer
           </h1>
-          <p class="text-sm lg:text-base text-gray-600  my-3 lg:my-4 max-w-md">
+          <p data-aos="fade-down" data-aos-delay="300" class="text-base md:text-lg lg:text-xl 2xl:text-2xl text-gray-600  my-3 lg:my-4 max-w-2xl">
             Architecting modern websites and dynamic web applications with passion and precision.
           </p>
-          <Btn href="/CV_Randriamiharisoa_Jean_Luc.pdf" download="CV_Randriamiharisoa_Jean_Luc.pdf">
-            <i class="pi pi-download mr-2"></i>
-            <span v-for="(letter, i) in letters" :key="i" class="letter" :style="{'--delay': i * 0.05 + 's'}">
-                <span class="top">{{ letter }}</span>
-                <span class="bottom">{{ letter }}</span>
-            </span>
-          </Btn>
+          <div class="mt-4">
+            <Btn  href="/CV_Randriamiharisoa_Jean_Luc.pdf" download="CV_Randriamiharisoa_Jean_Luc.pdf">
+              <i class="pi pi-download mr-2"></i>
+              <span v-for="(letter, i) in letters" :key="i" class="letter" :style="{'--delay': i * 0.05 + 's'}">
+                  <span class="top">{{ letter }}</span>
+                  <span class="bottom">{{ letter }}</span>
+              </span>
+            </Btn>
+          </div>
         </div>
 
-        <div class="w-full flex justify-center items-center lg:justify-end">
+        <div data-aos="fade-down" data-aos-delay="500" class="w-full flex justify-center items-center lg:justify-end">
           <Ripple />
         </div>
 
@@ -201,13 +221,13 @@
 
     <!-- About -->
     <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="aboutSection">
-      <Title>About Me</Title>
+      <Title data-aos="fade-right" data-aos-delay="100">About Me</Title>
       <div class="flex flex-col md:flex-row px-3 md:px-7 py-10 gap-4 items-stretch">
-        <div
+        <div data-aos="fade-right" data-aos-delay="200"
           class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
           <img src="/src/assets/2.png" alt="" class="w-full h-full object-cover object-top">
         </div>
-        <div class="flex-1 bg-black/10 backdrop-blur-md rounded-2xl tracking-tight p-4 sm:p-8">
+        <div data-aos="fade-right" data-aos-delay="300" class="flex-1 bg-black/10 backdrop-blur-md rounded-2xl tracking-tight p-4 sm:p-8">
           <div class="mb-1 font-bold text-2xl text-gray-900 ">
             Hi, My name is Randriamiharisoa Jean Luc.
           </div>
@@ -226,27 +246,27 @@
 
     <!-- Services -->
     <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="servicesSection">
-      <Title>My Services</Title>
-      <Service />
+      <Title data-aos="fade-left" >My Services</Title>
+      <Service data-aos="fade-left"  />
     </section>
 
     <!-- Projects -->
-    <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="projectsSection">
-      <Title>My Projects</Title>
-      <div class="px-3 md:px-7 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 [&>*]:min-w-0">
+    <section  class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="projectsSection">
+      <Title data-aos="fade-right" data-aos-delay="100">My Projects</Title>
+      <div data-aos="fade-right" data-aos-delay="200" class="px-3 md:px-7 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 [&>*]:min-w-0">
         <Project v-for="p in allProjects.slice(0,3)" :key="p.id" :project="p" />
       </div>
-      <div class="text-center">
+      <div data-aos="fade-right" data-aos-delay="300" class="text-center">
         <Btn @click="openModal">View More</Btn>
       </div>
     </section>
 
     <!-- Contact -->
-    <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="contactSection">
-      <Title>Contact Me</Title>
+    <section  class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="contactSection">
+      <Title data-aos="fade-left" data-aos-delay="100">Contact Me</Title>
       <div class="px-3 md:px-7 py-10 flex flex-col md:flex-row gap-4">
 
-        <div class="bg-black/10 backdrop-blur-md rounded-2xl flex-1 p-4 sm:p-8">
+        <div data-aos="fade-left" data-aos-delay="200" class="bg-black/10 backdrop-blur-md rounded-2xl flex-1 p-4 sm:p-8">
           <h2 class="text-xl lg:text-2xl font-bold text-gray-500 mb-2">Have a project?</h2>
           <h1 class="text-6xl lg:text-8xl font-black tracking-tight text-gray-900  mb-7 lg:mb-8">
             Let's <span class="text-[#ff004f]">talk</span>
@@ -272,7 +292,7 @@
           <Social />
         </div>
 
-        <div class="bg-black/10 backdrop-blur-md rounded-2xl md:w-1/2 lg:w-[45%] p-4 sm:p-8">
+        <div data-aos="fade-left" data-aos-delay="300" class="bg-black/10 backdrop-blur-md rounded-2xl md:w-1/2 lg:w-[45%] p-4 sm:p-8">
           <Input />
         </div>
 
@@ -329,6 +349,11 @@
   .logo {
     transform-style: preserve-3d;
     animation: flip 6s ease-in-out infinite;
+    color: black;
+    text-shadow:
+      0 0 0 #120106c8,
+      0 0 0 #160007be,
+      0 1px 0 #22000a;
   }
 
   @keyframes flip {

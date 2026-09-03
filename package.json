@@ -13,6 +13,7 @@
     "@primeicons/vue": "^8.0.0",
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.3.3",
+    "aos": "^2.3.4",
     "firebase": "^12.13.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
