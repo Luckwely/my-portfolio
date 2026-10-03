@@ -5,7 +5,7 @@ defineProps({
     email: { type: String, default: 'Lucharisoaa@gmail.com' },
     avatarUrl: {
         type: String,
-        default: 'src/assets/2.png',
+        default: 'https://i.postimg.cc/xjWLMC1m/2.png',
     },
     badgeId: { type: String, default: '' },
     brand: { type: String, default: 'Jean luc' },
@@ -14,12 +14,12 @@ defineProps({
 
 <template>
     <div data-aos="fade-right" class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
-      <div class="relative flex min-h-screen items-start justify-center overflow-hidden">
+      <div class="relative flex h-auto items-start justify-center overflow-hidden">
 
           <div
               class="pointer-events-none absolute left-1/2 top-1/3 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-700/10 blur-3xl" />
-  
-          <div class="badge-swing relative h-[620px] w-[340px] origin-top scale-[0.8] sm:scale-100">
+
+          <div class="badge-swing relative h-[500px] w-[340px] origin-top scale-[0.8] sm:h-[620px] sm:scale-100">
               <div
                   class="absolute left-1/2 top-[-200px] h-[260px] w-[54px] -translate-x-1/2 bg-gradient-to-r from-neutral-900 via-stone-950 to-black shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]">
                   <div class="absolute inset-y-0 left-1 w-px bg-white/10" />
