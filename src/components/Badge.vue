@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
+    <div data-aos="fade-right" class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
       <div class="relative flex min-h-screen items-start justify-center overflow-hidden">
 
           <div
