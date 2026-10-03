@@ -1,11 +1,13 @@
 <script setup>
+import defaultAvatar from '../assets/2.png'
+
 defineProps({
     name: { type: String, default: 'Jean Luc' },
     title: { type: String, default: 'Developer Web' },
     email: { type: String, default: 'Lucharisoaa@gmail.com' },
     avatarUrl: {
         type: String,
-        default: new URL('../assets/2.png', import.meta.url).href
+        default: defaultAvatar
     },
     badgeId: { type: String, default: '' },
     brand: { type: String, default: 'Jean luc' },
