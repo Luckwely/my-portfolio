@@ -16,6 +16,7 @@
   import { db } from './firebase';
   import AOS from 'aos';
   import 'aos/dist/aos.css';
+import Badge from './components/Badge.vue';
 
   const text= "Download Resume";
   const letters = text.split('');
@@ -223,10 +224,7 @@
     <section class="px-1 md:px-5 xl:px-16 2xl:px-32 pt-20" ref="aboutSection">
       <Title data-aos="fade-right" data-aos-delay="100">About Me</Title>
       <div class="flex flex-col md:flex-row px-3 md:px-7 py-10 gap-4 items-stretch">
-        <div data-aos="fade-right" data-aos-delay="200"
-          class="w-full md:w-[40%] lg:w-[30%] bg-black/10 backdrop-blur-md rounded-2xl overflow-hidden min-h-[300px] md:min-h-0 self-stretch">
-          <img src="/src/assets/2.png" alt="" class="w-full h-full object-cover object-top">
-        </div>
+        <Badge />
         <div data-aos="fade-right" data-aos-delay="300" class="flex-1 bg-black/10 backdrop-blur-md rounded-2xl tracking-tight p-4 sm:p-8">
           <div class="mb-1 font-bold text-2xl text-gray-900 ">
             Hi, My name is Randriamiharisoa Jean Luc.
