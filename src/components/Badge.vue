@@ -5,8 +5,7 @@ defineProps({
     email: { type: String, default: 'Lucharisoaa@gmail.com' },
     avatarUrl: {
         type: String,
-        default:
-            '/src/assets/2.png',
+        default: new URL('../assets/2.png', import.meta.url).href
     },
     badgeId: { type: String, default: '' },
     brand: { type: String, default: 'Jean luc' },
